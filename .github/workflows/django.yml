@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main","dev" ] # dev추가
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main","dev" ] # dev추가
 
 jobs:
   build:
@@ -13,12 +13,12 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.10.12] # 자신의 버전과 맞추기 python --version
 
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5 # 신버전으로 올리기
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
