@@ -248,3 +248,5 @@ class Region(models.Model):
 
     def __str__(self):
         return f"{self.sido} {self.sigungu} {self.eupmyeondong}"
+
+
