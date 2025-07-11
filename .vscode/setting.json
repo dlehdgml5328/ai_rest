@@ -1,0 +1,6 @@
+{
+"python.defaultInterpreterPath": "/home/donghee/ai_rest/venv/bin/python",
+"terminal.integrated.env.linux": {
+    "PATH": "/home/donghee/ai_rest/venv/bin:${env:PATH}"
+}
+}
