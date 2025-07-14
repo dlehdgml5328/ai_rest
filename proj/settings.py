@@ -75,8 +75,7 @@ WSGI_APPLICATION = "proj.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-load_dotenv()
-
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
