@@ -10,10 +10,32 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    services:  # ✅ 여기 추가됨
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_pass
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.12.3] # 자신의 버전과 맞추기 python --version
+
+    env:  # ✅ 환경 변수도 설정
+      DB_NAME: test_db
+      DB_USER: test_user
+      DB_PASSWORD: test_pass
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
 
     steps:
     - uses: actions/checkout@v4
