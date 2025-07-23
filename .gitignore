@@ -8,8 +8,13 @@ __pycache__
 .coverage
 .coverage.*
 db.sqlite3
-
+.env
+.ebxtensions
+.gitignore
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+/static
+/media/
+.vscode/

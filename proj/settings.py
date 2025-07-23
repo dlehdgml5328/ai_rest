@@ -13,22 +13,39 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+import pymysql
 from dotenv import load_dotenv
+
+pymysql.install_as_MySQLdb()
+# from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+DB_NAME = os.environ.get("DB_NAME")
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ess9-o06yv%xyv(kybh22^a_b345kk2k^vv86ze_sg_jmia6^r"
-
+SECRET_KEY = "2hyFmm9IQ0RHkJSbDRB9iaUYiJo6sUD1yFoupYi4sX7BJrw70vVETCSRYZswMmSx"
+# "django-insecure-ess9-o06yv%xyv(kybh22^a_b345kk2k^vv86ze_sg_jmia6^r"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["*"]
+DEBUG = os.getenv("DEBUG", "False") == "True"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+# HSTS 설정 (1년)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# HTTPS 강제 리다이렉트
+SECURE_SSL_REDIRECT = True
+
+# 쿠키를 HTTPS 전용으로만
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -41,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "restaurant",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -75,22 +93,19 @@ WSGI_APPLICATION = "proj.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST"),
-        "PORT": os.environ.get("DB_PORT"),
-        "OPTIONS": {
-            "charset": "utf8mb4",
-            "init_command": "SET NAMES utf8mb4",
-        },
+        "NAME": os.environ.get("DB_NAME", "restaurant_db"),
+        "USER": os.environ.get("DB_USER", "django_user"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "db_password"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "3306"),
+        "OPTIONS": {"charset": "utf8mb4"},
     }
 }
-# 테스트 환경에서는 SQLite로 대체
+
 if os.environ.get("TEST"):
     DATABASES = {
         "default": {
@@ -98,6 +113,7 @@ if os.environ.get("TEST"):
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+# Use Amazon S3 for storage for uploaded media files if not debugging
 if os.environ.get("S3_BUCKET"):
     STORAGES = {
         "default": {
@@ -123,7 +139,6 @@ if os.environ.get("S3_BUCKET"):
             },
         },
     }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -146,7 +161,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "UTC"
 
@@ -164,6 +179,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"

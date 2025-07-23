@@ -48,3 +48,6 @@ stack-data==0.6.3
 traitlets==5.14.3
 virtualenv==20.31.2
 wcwidth==0.2.13
+boto3==1.39.9
+django-storages==1.14.6
+djangorestframework==3.16.0
