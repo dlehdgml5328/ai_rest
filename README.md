@@ -90,8 +90,7 @@ eb create \
  --vpc.id vpc-0afb1a445383a1806 \
  --vpc.securitygroups sg-0f51b88c114a5ca35 \
  --vpc.ec2subnets subnet-06d9179e1335b45b3,subnet-0bdd02392905d36f4,subnet-06a0abb61adb08d64,subnet-0aa6db2657fbd2b9b \
-  --envvars DB_NAME=restaurant_db,DB_USER=admin,DB_PASSWORD=5cbDPlXuVIM08EWpvaOa,DB_HOST=airest-db.c7cmcg408xvn.ap-northeast-2.rds.amazonaws.com,S3_BUCKET=
-airest-dev1 \
+ --envvars DB_NAME=restaurant_db,DB_USER=admin,DB_PASSWORD=5cbDPlXuVIM08EWpvaOa,DB_HOST=airest-db.c7cmcg408xvn.ap-northeast-2.rds.amazonaws.com,S3_BUCKET=airest-dev1 \
  --vpc.elbpublic \
  --vpc.publicip
 ```
